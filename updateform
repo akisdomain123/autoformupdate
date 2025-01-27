@@ -1,0 +1,57 @@
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+import time
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+
+chrome_driver_path = r'C:\Users\ashwi\AppData\aRoaming\Microsoft\Windows\Start Menu\Programs\Python 3.12\chromedriver.exe'
+brave_path = r'c:\Users\ashwi\AppData\Local\BraveSoftware\Brave-Browser\Application\brave.exe'
+
+data = {
+    "phone_number": "+919999999999",
+    "owner_name": "test",
+    "company_name": "test",
+    "category": "test",
+    "email_address": "test@gmail.com",
+    "location_country": "test",
+    "location_city": "test",
+    "profile": "test"
+}
+
+
+# Configure options for Brave
+options = Options()
+options.binary_location = brave_path
+
+# Initialize the WebDriver
+service = Service(chrome_driver_path)
+driver = webdriver.Chrome(service=service, options=options)
+
+
+driver.get("https://activities.parentnetwork.io/vendorForm/registerforms.php")
+
+phone_no_input = driver.find_element(By.ID, "phone")
+name_input = driver.find_element(By.ID, "name")
+brand_name_input = driver.find_element(By.ID, "display_name")
+category_input = driver.find_element(By.ID, "category")
+email_input = driver.find_element(By.ID, "email_address")
+country_input = driver.find_element(By.ID, "location_country")
+city_input = driver.find_element(By.ID, "location_address")
+profile_input = driver.find_element(By.ID, "profile_details")
+
+phone_no_input.send_keys(data["phone_number"])
+name_input.send_keys(data["owner_name"])
+brand_name_input.send_keys(data["company_name"])
+category_input.send_keys(data["category"])
+email_input.send_keys(data["email_address"])
+country_input.send_keys(data["location_country"])
+city_input.send_keys(data["location_city"])
+profile_input.send_keys(data["profile"])
+
+buttons = driver.find_elements(By.TAG_NAME, "button")
+for button in buttons:
+    if(button.text == "Submit"):
+        submit_button = button
+
+# submit_button.click()
